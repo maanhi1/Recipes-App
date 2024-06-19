@@ -7,7 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 //Screen imports
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
-import CommunityScreen from "../screens/CommunityScreen";
+import AddRecipeScreen from "../screens/AddRecipeScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -75,7 +75,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Community"
-          component={CommunityScreen}
+          component={AddRecipeScreen}
           options={{ tabBarLabel: "Cộng đồng" }}
         />
         <Tab.Screen
