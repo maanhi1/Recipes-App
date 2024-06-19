@@ -4,10 +4,9 @@ import axios from "axios";
 
 export default function App() {
   const [data, setData] = useState([]);
-
   useEffect(() => {
     axios
-      .get("http://192.168.1.11:3000/datadish") // Thay 192.168.1.11 bằng địa chỉ IP của máy
+      .get("http://192.168.1.7:3000/datadish") // Thay 192.168.1.11 bằng địa chỉ IP của máy
       .then((response) => {
         console.log(response.data);
         if (Array.isArray(response.data)) {
@@ -29,7 +28,7 @@ export default function App() {
           <View key={user.dishId}>
             <Text>Tên món ăn: {user.dishName}</Text>
             <Text>Calo: {user.calo}</Text>
-            <Text>Protein: {user.protein}</Text>
+            <Text>Protein: {user.dificultyLevel}</Text>
           </View>
         ))
       ) : (

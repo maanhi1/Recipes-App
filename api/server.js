@@ -21,6 +21,14 @@ app.get("/datadish", (req, res) => {
     res.send(results);
   });
 });
+//Get detail dish
+app.get("/detail_dish", (req, res) => {
+  let sql = "SELECT * FROM dish";
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.send(results);
+  });
+});
 
 app.listen(3000, () => {
   console.log(`Connected !!!`);
