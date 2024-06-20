@@ -13,9 +13,9 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       {/* <SignupScreen></SignupScreen> */}
-      {/* <BottomNavigation /> */}
+      <BottomNavigation />
       {/* <DetailDish></DetailDish> */}
-      <FilterScreent></FilterScreent>
+      {/* <FilterScreent></FilterScreent> */}
     </View>
   );
 }

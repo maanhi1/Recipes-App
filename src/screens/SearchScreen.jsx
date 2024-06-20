@@ -32,7 +32,7 @@ export default function App() {
             />
           </TextInput>
           <Icon
-            style={{ padding: 8, marginLeft: 5 }}
+            style={{ padding: 4, marginLeft: 5 }}
             name="options-outline"
             color={"#86869E"}
             size={30}
@@ -66,10 +66,6 @@ export default function App() {
         </View>
         {/* Dishes */}
         <View>
-          <View style={styles.heading}>
-            <Text>Recommend</Text>
-            <Text style={{ marginLeft: 200 }}>See all</Text>
-          </View>
           <View style={styles.dishContainer}>
             {/* More ... */}
             <View style={styles.dishItem}>
@@ -78,18 +74,16 @@ export default function App() {
                 source={require("../../assets/image.jpg")}
               />
               <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
+                <Text style={{ marginTop: 5, marginLeft: 10 }}>
                   Lasagna Pasta
                 </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
+
                 <View style={styles.dishContainer3}>
                   <Image
                     style={styles.imgUser}
                     source={require("../../assets/image.jpg")}
                   />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
+                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
                     Thỏ con của mẹ
                   </Text>
                   <Icon
@@ -108,18 +102,16 @@ export default function App() {
                 source={require("../../assets/image.jpg")}
               />
               <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
+                <Text style={{ marginTop: 5, marginLeft: 10 }}>
                   Lasagna Pasta
                 </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
+
                 <View style={styles.dishContainer3}>
                   <Image
                     style={styles.imgUser}
                     source={require("../../assets/image.jpg")}
                   />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
+                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
                     Thỏ con của mẹ
                   </Text>
                   <Icon
@@ -138,18 +130,16 @@ export default function App() {
                 source={require("../../assets/image.jpg")}
               />
               <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
+                <Text style={{ marginTop: 5, marginLeft: 10 }}>
                   Lasagna Pasta
                 </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
+
                 <View style={styles.dishContainer3}>
                   <Image
                     style={styles.imgUser}
                     source={require("../../assets/image.jpg")}
                   />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
+                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
                     Thỏ con của mẹ
                   </Text>
                   <Icon
@@ -168,18 +158,44 @@ export default function App() {
                 source={require("../../assets/image.jpg")}
               />
               <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
+                <Text style={{ marginTop: 5, marginLeft: 10 }}>
                   Lasagna Pasta
                 </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
+
                 <View style={styles.dishContainer3}>
                   <Image
                     style={styles.imgUser}
                     source={require("../../assets/image.jpg")}
                   />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
+                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
+                    Thỏ con của mẹ
+                  </Text>
+                  <Icon
+                    style={{ marginTop: 5, marginLeft: 10 }}
+                    name="bookmark-outline"
+                    color={"#000"}
+                    size={18}
+                  />
+                </View>
+              </View>
+            </View>
+            {/* vidu */}
+            <View style={styles.dishItem}>
+              <Image
+                style={styles.imgDish}
+                source={require("../../assets/image.jpg")}
+              />
+              <View style={styles.dishContainer2}>
+                <Text style={{ marginTop: 5, marginLeft: 10 }}>
+                  Lasagna Pasta
+                </Text>
+
+                <View style={styles.dishContainer3}>
+                  <Image
+                    style={styles.imgUser}
+                    source={require("../../assets/image.jpg")}
+                  />
+                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
                     Thỏ con của mẹ
                   </Text>
                   <Icon
@@ -203,31 +219,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  slide: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   dishContainer: {
     flex: 1,
     flexWrap: "wrap",
     flexDirection: "row",
     alignContent: "flex-start",
-    marginTop: 20,
+    marginTop: 25,
     position: "relative",
   },
   dishContainer3: {
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 10,
   },
   dishContainer2: {
     backgroundColor: "#fff",
     width: width / 2 - 20,
     position: "absolute",
-    height: 85,
-    marginTop: 150,
-    elevation: 5,
+    height: 75,
+    marginTop: 140,
+    elevation: 3,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
@@ -240,14 +250,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 8,
     borderRadius: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
   },
   buttonText: {
-    fontSize: 18,
-  },
-  wrapper: {
-    height: 120,
-    marginTop: 10,
+    fontSize: 17,
   },
   heading: {
     flexDirection: "row",
@@ -255,29 +261,29 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   dishItem: {
-    width: (width - 30) / 2, // Chia đôi chiều rộng
-    marginBottom: 60,
+    width: (width - 30) / 2,
+    marginBottom: 90,
     alignItems: "center",
     marginLeft: 10,
   },
   imgDish: {
     borderRadius: 10,
     width: width / 2 - 20,
-    height: 200,
+    height: 150,
   },
   imgUser: {
-    height: 30,
-    width: 30,
+    height: 25,
+    width: 25,
     borderRadius: 50,
     marginLeft: 8,
   },
   searchContainer: {
-    marginTop: 20,
+    marginTop: 60,
     flexDirection: "row",
   },
   fieldSearch: {
     backgroundColor: "#F3F4F9",
-    height: 45,
+    height: 40,
     borderRadius: 30,
     position: "relative",
     paddingLeft: 20,

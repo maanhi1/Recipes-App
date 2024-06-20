@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: "relative",
-    fontFamily: "Dongle-Regular",
   },
   userContainer: {
     backgroundColor: "#fff",

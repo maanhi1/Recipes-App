@@ -49,38 +49,44 @@ export default function App() {
           style={styles.wrapper}
           showsButtons={false}
           showsPagination={false}
-          autoplay={true}
+          // autoplay={true}
           autoplayTimeout={3}
           loop={true}
         >
           <View style={styles.slide}>
             <Image
-              style={{ height: 100, width: width - 20, borderRadius: 20 }}
+              style={{ height: 120, width: width - 20, borderRadius: 20 }}
               source={require("../../assets/banners/1.jpg")}
             />
           </View>
           <View style={styles.slide}>
             <Image
-              style={{ height: 100, width: width - 20, borderRadius: 20 }}
+              style={{ height: 120, width: width - 20, borderRadius: 20 }}
               source={require("../../assets/banners/2.jpg")}
             />
           </View>
           <View style={styles.slide}>
             <Image
-              style={{ height: 100, width: width - 20, borderRadius: 20 }}
+              style={{ height: 120, width: width - 20, borderRadius: 20 }}
               source={require("../../assets/banners/3.jpg")}
             />
           </View>
           <View style={styles.slide}>
             <Image
-              style={{ height: 100, width: width - 20, borderRadius: 20 }}
+              style={{ height: 120, width: width - 20, borderRadius: 20 }}
               source={require("../../assets/banners/4.jpg")}
             />
           </View>
           <View style={styles.slide}>
             <Image
-              style={{ height: 100, width: width - 20, borderRadius: 20 }}
+              style={{ height: 120, width: width - 20, borderRadius: 20 }}
               source={require("../../assets/banners/5.jpg")}
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              style={{ height: 120, width: width - 20, borderRadius: 20 }}
+              source={require("../../assets/banners/6.jpg")}
             />
           </View>
         </Swiper>
@@ -93,120 +99,173 @@ export default function App() {
           <View style={styles.dishContainer}>
             {/* More ... */}
             <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
-                    Thỏ con của mẹ
+              <View style={styles.dishItemContainer}>
+                <Image
+                  style={styles.imgDish}
+                  source={require("../../assets/image.jpg")}
+                />
+                <View style={styles.dishContainer2}>
+                  <Text style={{ marginLeft: 10, fontSize: 20 }}>
+                    Lasagna Pasta
+                  </Text>
+                  <View style={styles.dishContainer3}>
+                    <Image
+                      style={styles.imgUser}
+                      source={require("../../assets/image.jpg")}
+                    />
+                    <Text style={{ fontSize: 13, marginTop: 3, marginLeft: 8 }}>
+                      Thỏ con của mẹ
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      marginLeft: 45,
+                      width: 150,
+                      fontSize: 10,
+                      color: "#686868",
+                      lineHeight: 20,
+                    }}
+                  >
+                    Just take about 30 minutes. The recipe is very clear and
+                    easy to follow. Let’s try it
                   </Text>
                   <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
+                    style={{
+                      marginLeft: 170,
+                    }}
                     name="bookmark-outline"
                     color={"#000"}
-                    size={18}
+                    size={20}
                   />
                 </View>
               </View>
             </View>
-            {/* vidu */}
+            {/* Vi du */}
             <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
-                    Thỏ con của mẹ
+              <View style={styles.dishItemContainer}>
+                <Image
+                  style={styles.imgDish}
+                  source={require("../../assets/image.jpg")}
+                />
+                <View style={styles.dishContainer2}>
+                  <Text style={{ marginLeft: 10, fontSize: 20 }}>
+                    Lasagna Pasta
+                  </Text>
+                  <View style={styles.dishContainer3}>
+                    <Image
+                      style={styles.imgUser}
+                      source={require("../../assets/image.jpg")}
+                    />
+                    <Text style={{ fontSize: 13, marginTop: 3, marginLeft: 8 }}>
+                      Thỏ con của mẹ
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      marginLeft: 45,
+                      width: 150,
+                      fontSize: 10,
+                      color: "#686868",
+                      lineHeight: 20,
+                    }}
+                  >
+                    Just take about 30 minutes. The recipe is very clear and
+                    easy to follow. Let’s try it
                   </Text>
                   <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
+                    style={{
+                      marginLeft: 170,
+                    }}
                     name="bookmark-outline"
                     color={"#000"}
-                    size={18}
+                    size={20}
                   />
                 </View>
               </View>
             </View>
-            {/* vidu */}
+            {/* Vi du */}
             <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
-                    Thỏ con của mẹ
+              <View style={styles.dishItemContainer}>
+                <Image
+                  style={styles.imgDish}
+                  source={require("../../assets/image.jpg")}
+                />
+                <View style={styles.dishContainer2}>
+                  <Text style={{ marginLeft: 10, fontSize: 20 }}>
+                    Lasagna Pasta
+                  </Text>
+                  <View style={styles.dishContainer3}>
+                    <Image
+                      style={styles.imgUser}
+                      source={require("../../assets/image.jpg")}
+                    />
+                    <Text style={{ fontSize: 13, marginTop: 3, marginLeft: 8 }}>
+                      Thỏ con của mẹ
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      marginLeft: 45,
+                      width: 150,
+                      fontSize: 10,
+                      color: "#686868",
+                      lineHeight: 20,
+                    }}
+                  >
+                    Just take about 30 minutes. The recipe is very clear and
+                    easy to follow. Let’s try it
                   </Text>
                   <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
+                    style={{
+                      marginLeft: 170,
+                    }}
                     name="bookmark-outline"
                     color={"#000"}
-                    size={18}
+                    size={20}
                   />
                 </View>
               </View>
             </View>
-            {/* vidu */}
+            {/* Vi du */}
+
             <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-                <Text style={{ marginTop: 3, marginLeft: 10 }}>
-                  Description
-                </Text>
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 6 }}>
-                    Thỏ con của mẹ
+              <View style={styles.dishItemContainer}>
+                <Image
+                  style={styles.imgDish}
+                  source={require("../../assets/image.jpg")}
+                />
+                <View style={styles.dishContainer2}>
+                  <Text style={{ marginLeft: 10, fontSize: 20 }}>
+                    Lasagna Pasta
+                  </Text>
+                  <View style={styles.dishContainer3}>
+                    <Image
+                      style={styles.imgUser}
+                      source={require("../../assets/image.jpg")}
+                    />
+                    <Text style={{ fontSize: 13, marginTop: 3, marginLeft: 8 }}>
+                      Thỏ con của mẹ
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      marginLeft: 45,
+                      width: 150,
+                      fontSize: 10,
+                      color: "#686868",
+                      lineHeight: 20,
+                    }}
+                  >
+                    Just take about 30 minutes. The recipe is very clear and
+                    easy to follow. Let’s try it
                   </Text>
                   <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
+                    style={{
+                      marginLeft: 170,
+                    }}
                     name="bookmark-outline"
                     color={"#000"}
-                    size={18}
+                    size={20}
                   />
                 </View>
               </View>
@@ -230,65 +289,64 @@ const styles = StyleSheet.create({
   },
 
   dishContainer: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    alignContent: "flex-start",
-    marginTop: 20,
-    position: "relative",
+    marginTop: 10,
   },
   dishContainer3: {
     flexDirection: "row",
     marginTop: 5,
   },
   dishContainer2: {
-    backgroundColor: "#fff",
-    width: width / 2 - 20,
-    position: "absolute",
-    height: 85,
-    marginTop: 150,
-    elevation: 5,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    marginTop: 5,
+    marginLeft: 5,
   },
   buttonContainer: {
     flexDirection: "row",
-    marginTop: 20,
+    marginTop: 60,
   },
   button: {
     backgroundColor: "#DEDEDEB2",
     marginLeft: 10,
     padding: 8,
     borderRadius: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 17,
   },
   wrapper: {
-    height: 120,
+    height: 150,
     marginTop: 10,
   },
   heading: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 10,
+    marginTop: 20,
   },
   dishItem: {
-    width: (width - 30) / 2, // Chia đôi chiều rộng
-    marginBottom: 60,
-    alignItems: "center",
+    width: width - 20,
+    marginBottom: 15,
     marginLeft: 10,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    borderColor: "#A8A8A8",
+    height: 150,
+    backgroundColor: "#FFFFFF",
+    elevation: 3,
   },
   imgDish: {
     borderRadius: 10,
-    width: width / 2 - 20,
-    height: 200,
+    width: width / 2 - 50,
+    height: 130,
+    marginTop: 10,
+    marginLeft: 10,
   },
   imgUser: {
-    height: 30,
-    width: 30,
+    height: 25,
+    width: 25,
     borderRadius: 50,
     marginLeft: 10,
+  },
+  dishItemContainer: {
+    flexDirection: "row",
   },
 });

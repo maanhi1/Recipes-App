@@ -29,11 +29,10 @@ export default function App() {
               name="search-outline"
               color={"#86869E"}
               size={18}
-              onPress={Colors.red}
             />
           </TextInput>
           <Icon
-            style={{ padding: 8, marginLeft: 5 }}
+            style={{ padding: 4, marginLeft: 5 }}
             name="options-outline"
             color={"#86869E"}
             size={30}
@@ -222,15 +221,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    marginTop: 60,
+    marginTop: 70,
   },
   searchContainer: {
-    marginTop: 20,
+    marginTop: 10,
     flexDirection: "row",
   },
   fieldSearch: {
     backgroundColor: "#F3F4F9",
-    height: 45,
+    height: 40,
     borderRadius: 30,
     position: "relative",
     paddingLeft: 20,

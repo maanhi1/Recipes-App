@@ -8,8 +8,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Dropdown } from "react-native-element-dropdown";
+import React, { useEffect, useState } from "react";
+
+const dataComplexity = [
+  { label: "Easy", value: "1" },
+  { label: "Moderate", value: "2" },
+  { label: "Hard", value: "3" },
+];
 
 export default function App() {
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -43,11 +53,11 @@ export default function App() {
           ></TextInput>
           {/* field name */}
           <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
-            Recipe Description
+            Description of dish
           </Text>
           <TextInput
-            style={styles.fieldName}
-            placeholder="Type recipe description..."
+            style={styles.fieldDescription}
+            placeholder="Describe for your dish"
             placeholderTextColor={"#C6C6C6"}
           ></TextInput>
           {/* field nutri */}
@@ -58,7 +68,7 @@ export default function App() {
             <View style={styles.inputNutri}>
               <TextInput
                 style={{
-                  borderWidth: 1,
+                  borderWidth: 0.5,
                   height: 50,
                   borderRadius: 10,
                   borderColor: "#C6C6C6",
@@ -70,7 +80,7 @@ export default function App() {
               ></TextInput>
               <TextInput
                 style={{
-                  borderWidth: 1,
+                  borderWidth: 0.5,
                   height: 50,
                   borderRadius: 10,
                   borderColor: "#C6C6C6",
@@ -98,7 +108,7 @@ export default function App() {
               </Text>
               <TextInput
                 style={{
-                  borderWidth: 1,
+                  borderWidth: 0.5,
                   height: 50,
                   borderRadius: 10,
                   borderColor: "#C6C6C6",
@@ -113,18 +123,23 @@ export default function App() {
               <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
                 Complexity
               </Text>
-              <TextInput
-                style={{
-                  borderWidth: 1,
-                  height: 50,
-                  borderRadius: 10,
-                  borderColor: "#C6C6C6",
-                  width: 150,
-                  marginTop: 10,
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                data={dataComplexity}
+                maxHeight={500}
+                labelField="label"
+                valueField="value"
+                placeholder={!isFocus ? "Choose" : "..."}
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(item) => {
+                  setValue(item.value);
+                  setIsFocus(false);
                 }}
-              >
-                Type recipe name...
-              </TextInput>
+              />
             </View>
           </View>
           {/* field ingredients */}
@@ -181,7 +196,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 55,
   },
   textDish: {
     flexDirection: "row",
@@ -205,15 +220,23 @@ const styles = StyleSheet.create({
   },
   fieldName: {
     borderColor: "#C6C6C6",
-    borderWidth: 1,
+    borderWidth: 0.5,
     height: 50,
+    borderRadius: 10,
+    marginTop: 10,
+    paddingLeft: 20,
+  },
+  fieldDescription: {
+    borderColor: "#C6C6C6",
+    borderWidth: 0.5,
+    height: 150,
     borderRadius: 10,
     marginTop: 10,
     paddingLeft: 20,
   },
   button: {
     borderColor: "#C6C6C6",
-    borderWidth: 1,
+    borderWidth: 0.5,
     padding: 8,
     borderRadius: 10,
     marginTop: 10,
@@ -224,7 +247,7 @@ const styles = StyleSheet.create({
   },
   fieldStep: {
     borderColor: "#C6C6C6",
-    borderWidth: 1,
+    borderWidth: 0.5,
     height: 150,
     borderRadius: 10,
     marginTop: 10,
@@ -235,5 +258,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     alignItems: "center",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "#C6C6C6",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 20,
+    width: 150,
+    marginTop: 10,
+  },
+  placeholderStyle: {
+    fontSize: 15,
+  },
+  selectedTextStyle: {
+    fontSize: 15,
   },
 });
