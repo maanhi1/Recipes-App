@@ -4,9 +4,10 @@ import axios from "axios";
 
 export default function App() {
   const [data, setData] = useState([]);
+
   useEffect(() => {
     axios
-      .get("http://192.168.0.104:3000/datadish") // Thay 192.168.1.11 bằng địa chỉ IP của máy
+      .get("http://192.168.0.104:3000/datauser")
       .then((response) => {
         console.log(response.data);
         if (Array.isArray(response.data)) {
@@ -24,15 +25,15 @@ export default function App() {
     <View style={styles.container}>
       <Text>Danh sách món ăn:</Text>
       {data.length > 0 ? (
-        data.map((user) => (
-          <View key={user.dishId}>
-            <Text>Tên món ăn: {user.dishName}</Text>
-            <Text>Calo: {user.calo}</Text>
-            <Text>Protein: {user.dificultyLevel}</Text>
+        data.map((items) => (
+          <View key={items.userId}>
+            <Text>username: {items.userName}</Text>
+            <Text>account: {items.accountName}</Text>
+            <Text>pass: {items.password}</Text>
           </View>
         ))
       ) : (
-        <Text>Không có dữ liệu</Text>
+        <Text>KHông</Text>
       )}
     </View>
   );
