@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
@@ -33,52 +35,52 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headertop}>Let's</Text>
-      <Text style={styles.header}>Sign you in</Text>
-      <Text style={styles.subtop}>Welcome back</Text>
-      <Text style={styles.sub}>You’ve been missed!</Text>
-      <View style={styles.inputContainer}>
-        <FontAwesomeIcon
-          name="envelope"
-          size={19}
-          color="#6E6E6E"
-          style={styles.icon}
-        />
-        <TextInput
-          style={[styles.input, { color: "#333" }]} // Màu chữ đen
-          placeholder="Enter your Email"
-          defaultValue={email}
-          onChangeText={setEmail}
-        />
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <View style={styles.container}>
+        <Text style={styles.headertop}>Let's</Text>
+        <Text style={styles.header}>Sign you in</Text>
+        <Text style={styles.subtop}>Welcome back</Text>
+        <Text style={styles.sub}>You’ve been missed!</Text>
+        <View style={styles.inputContainer}>
+          <FontAwesomeIcon
+            name="envelope"
+            size={19}
+            color="#6E6E6E"
+            style={styles.icon}
+          />
+          <TextInput
+            style={[styles.input, { color: "#333" }]} // Màu chữ đen
+            placeholder="Enter your Email"
+            defaultValue={email}
+            onChangeText={setEmail}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <FontAwesomeIcon
+            name="lock"
+            size={19}
+            color="#6E6E6E"
+            style={styles.icon}
+          />
+          <TextInput
+            style={[styles.input, { color: "#333" }]} // Màu chữ đen
+            placeholder="Enter your Password"
+            secureTextEntry
+            defaultValue={password}
+            onChangeText={setPassword}
+          />
+        </View>
+        <TouchableOpacity style={styles.forgotButton}>
+          <Text style={styles.forgotText}>ForgotPassword?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.inputContainer}>
-        <FontAwesomeIcon
-          name="lock"
-          size={19}
-          color="#6E6E6E"
-          style={styles.icon}
-        />
-        <TextInput
-          style={[styles.input, { color: "#333" }]} // Màu chữ đen
-          placeholder="Enter your Password"
-          secureTextEntry
-          defaultValue={password}
-          onChangeText={setPassword}
-        />
-      </View>
-      <Text
-        style={[
-          styles.forgotText,
-          { position: "absolute", right: 20, bottom: 240 },
-        ]}
-      >
-        ForgotPassword?
-      </Text>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -127,8 +129,11 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 14,
   },
+  forgotButton: {
+    alignItems: "flex-end", // Đặt văn bản bên phải
+    marginTop: 10,
+  },
   forgotText: {
-    marginBottom: 47,
     fontWeight: "bold",
   },
   button: {
