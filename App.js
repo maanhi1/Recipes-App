@@ -4,6 +4,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import BottomNavigation from "./src/components/BottomNavigation";
 import Vidu from "./src/screens/vidu";
 import User from "./src/screens/user";
+import AddRecipeScreen from "./src/screens/AddRecipeScreen";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 

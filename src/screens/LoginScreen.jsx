@@ -1,97 +1,83 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  View,
+  StyleSheet,
   Text,
+  View,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
+  Alert,
 } from "react-native";
-
-// npm installed axios --save
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 
 export default function App() {
-  // khởi tạo biến rỗng để set giá trị
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [isSubmit, setIsSubmit] = useState(false);
+  const handleLogin = () => {
+    const user = { email, password };
 
-  //Xử lý chức năng SignIn
-  useEffect(() => {
-    const handleSignUp = async () => {
-      if (!email || !password) {
-        console.error("Please fill in all fields");
-        return;
-      }
-
-      console.log("Sending data:", { email, password });
-
-      try {
-        const response = await axios.post(`${BACKEND_URL}/user.php`, {
-          email,
-          password,
-        });
-        console.log("Response:", response.data);
-      } catch (error) {
-        if (error.response) {
-          // Request was made and server responded with a status code
-          console.error(
-            "Server responded with non-2xx status:",
-            error.response.status
-          );
-          console.error("Response data:", error.response.data);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error("No response received:", error.request);
-        } else {
-          // Something happened in setting up the request that triggered an error
-          console.error("Error setting up the request:", error.message);
-        }
-        console.error("Error config:", error.config);
-      }
-    };
-
-    if (isSubmit) {
-      handleSignUp();
-      setIsSubmit(false);
-    }
-  }, [isSubmit, email, password]);
+    axios
+      .post("http://192.168.0.104:3000/login", user)
+      .then((response) => {
+        console.log("Đăng nhập thành công:", response.data);
+        Alert.alert("Đăng nhập thành công");
+      })
+      .catch((error) => {
+        console.error("Đăng nhập thất bại:", error);
+        Alert.alert(
+          "Đăng nhập thất bại",
+          error.response?.data?.error || "Có lỗi xảy ra"
+        );
+      });
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Let's get</Text>
-      <Text style={styles.header}>started</Text>
-      <Text style={styles.subHeader}>Share the recipe </Text>
-      <Text style={styles.subHeader}>and enjoy it with others!</Text>
-
-      {/* Field của Email */}
-      <TextInput
-        placeholder="Enter your Email"
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(text) => setEmail(text)}
-      />
-
-      {/* Field của password */}
-      <TextInput
-        placeholder="Enter your password"
-        style={styles.input}
-        secureTextEntry={true}
-        autoCapitalize="none"
-        onChangeText={(text) => setPassword(text)}
-      />
-
-      {/* Button */}
-      <TouchableOpacity
-        style={styles.customButton}
-        onPress={() => setIsSubmit(true)}
+      <Text style={styles.headertop}>Let's</Text>
+      <Text style={styles.header}>Sign you in</Text>
+      <Text style={styles.subtop}>Welcome back</Text>
+      <Text style={styles.sub}>You’ve been missed!</Text>
+      <View style={styles.inputContainer}>
+        <FontAwesomeIcon
+          name="envelope"
+          size={19}
+          color="#6E6E6E"
+          style={styles.icon}
+        />
+        <TextInput
+          style={[styles.input, { color: "#333" }]} // Màu chữ đen
+          placeholder="Enter your Email"
+          defaultValue={email}
+          onChangeText={setEmail}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <FontAwesomeIcon
+          name="lock"
+          size={19}
+          color="#6E6E6E"
+          style={styles.icon}
+        />
+        <TextInput
+          style={[styles.input, { color: "#333" }]} // Màu chữ đen
+          placeholder="Enter your Password"
+          secureTextEntry
+          defaultValue={password}
+          onChangeText={setPassword}
+        />
+      </View>
+      <Text
+        style={[
+          styles.forgotText,
+          { position: "absolute", right: 20, bottom: 240 },
+        ]}
       >
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
-      <Text style={styles.footerText}>
-        Already have an account? <Text style={styles.footerLink}>Sign In</Text>
+        ForgotPassword?
       </Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -100,39 +86,63 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
   },
-  header: {
-    fontSize: 55,
+  headertop: {
+    fontSize: 50,
     fontWeight: "bold",
   },
-  subHeader: {
-    fontSize: 37,
+  header: {
+    fontSize: 50,
+    fontWeight: "bold",
+  },
+  subtop: {
+    fontSize: 20,
     color: "#B2B2B2",
-    marginVertical: 4,
+    marginTop: 15,
   },
-
-  input: {
+  sub: {
+    fontSize: 20,
+    color: "#B2B2B2",
+    marginBottom: 35,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#D1D1D1",
-    borderRadius: 5,
-    paddingHorizontal: 100,
-    marginVertical: 14,
-    height: 54,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    paddingLeft: 20,
+    width: 300,
   },
-
-  customButton: {
-    backgroundColor: "#000000",
-    paddingVertical: 13,
-    paddingHorizontal: 110,
-    borderRadius: 5,
-    marginTop: 12,
+  icon: {
+    marginRight: 10,
+    alignSelf: "center",
+    color: "#d3d3d3",
+  },
+  input: {
+    flex: 1,
+    height: 50,
+    fontSize: 14,
+  },
+  forgotText: {
+    marginBottom: 47,
+    fontWeight: "bold",
+  },
+  button: {
+    backgroundColor: "#000",
+    paddingVertical: 12,
+    borderRadius: 10,
+    height: 53,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 50,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
   },
 });
