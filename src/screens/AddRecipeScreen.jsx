@@ -10,16 +10,103 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { Dropdown } from "react-native-element-dropdown";
 import React, { useEffect, useState } from "react";
-
-const dataComplexity = [
-  { label: "Easy", value: "1" },
-  { label: "Moderate", value: "2" },
-  { label: "Hard", value: "3" },
-];
+import axios from "axios";
+import { Alert } from "react-native";
 
 export default function App() {
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  //dropdown categories
+  const [valueCategories, setValueCategories] = useState(null);
+  const [isFocusCategories, setIsFocusCategories] = useState(false);
+
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://192.168.1.7:3000/categories`)
+      .then((response) => {
+        const formattedData = response.data.map((item) => ({
+          label: item.categoryName,
+          value: item.categoryId,
+        }));
+        setCategory(formattedData);
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+
+  //dropdown complexity
+  const [valueComplexity, setValueComplexity] = useState(null);
+  const [isFocusComplexity, setIsFocusComplexity] = useState(false);
+
+  const [complexity, setComplexity] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://192.168.1.7:3000/difficultylevel`)
+      .then((response) => {
+        const formattedData = response.data.map((item) => ({
+          label: item.difficultyLevelName,
+          value: item.difficultyLevelId,
+        }));
+        setComplexity(formattedData);
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+  //ingredient add and remove field
+  const [ingredients, setIngredients] = useState([""]);
+
+  const addIngredient = () => {
+    setIngredients([...ingredients, ""]);
+  };
+
+  const removeIngredient = (index) => {
+    const newIngredients = [...ingredients];
+    newIngredients.splice(index, 1);
+    setIngredients(newIngredients);
+  };
+  //step add and remove
+  const [steps, setSteps] = useState([""]);
+
+  const addStep = () => {
+    setSteps([...steps, ""]);
+  };
+
+  const removeStep = (index) => {
+    const newSteps = [...steps];
+    newSteps.splice(index, 1);
+    setSteps(newSteps);
+  };
+
+  //get value all field
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [calo, setCalo] = useState("");
+  const [protein, setProtein] = useState("");
+
+  //Handle submit
+  const handleSubmit = () => {
+    const selectedCategory = category.find(
+      (item) => item.value === valueCategories
+    );
+    const selectedComplexity = complexity.find(
+      (item) => item.value === valueComplexity
+    );
+
+    const dishData = {
+      name,
+      categoryName: selectedCategory.label,
+      description,
+      calo,
+      protein,
+      complexityName: selectedComplexity.label,
+      ingredients,
+      steps,
+    };
+    //Tam thoi
+    console.log(dishData);
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -50,8 +137,32 @@ export default function App() {
             style={styles.fieldName}
             placeholder="Type recipe name..."
             placeholderTextColor={"#C6C6C6"}
+            onChangeText={(value) => {
+              setName(value);
+            }}
           ></TextInput>
-          {/* field name */}
+          {/* field categories */}
+          <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
+            Category name
+          </Text>
+          <Dropdown
+            style={[styles.dropdown1]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            data={category}
+            maxHeight={500}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocusCategories ? "Choose Category" : "..."}
+            value={valueCategories}
+            onFocus={() => setIsFocusCategories(true)}
+            onBlur={() => setIsFocusCategories(false)}
+            onChange={(item) => {
+              setValueCategories(item.value);
+              setIsFocusCategories(false);
+            }}
+          />
+          {/* field description */}
           <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
             Description of dish
           </Text>
@@ -59,6 +170,9 @@ export default function App() {
             style={styles.fieldDescription}
             placeholder="Describe for your dish"
             placeholderTextColor={"#C6C6C6"}
+            onChangeText={(value) => {
+              setDescription(value);
+            }}
           ></TextInput>
           {/* field nutri */}
           <View style={styles.fieldNutri}>
@@ -77,6 +191,9 @@ export default function App() {
                 }}
                 placeholder="Calories"
                 placeholderTextColor={"#C6C6C6"}
+                onChangeText={(value) => {
+                  setCalo(value);
+                }}
               ></TextInput>
               <TextInput
                 style={{
@@ -89,6 +206,9 @@ export default function App() {
                 }}
                 placeholder="Protein"
                 placeholderTextColor={"#C6C6C6"}
+                onChangeText={(value) => {
+                  setProtein(value);
+                }}
               ></TextInput>
             </View>
           </View>
@@ -114,10 +234,11 @@ export default function App() {
                   borderColor: "#C6C6C6",
                   width: 160,
                   marginTop: 10,
+                  paddingLeft: 20,
                 }}
-              >
-                Type recipe name...
-              </TextInput>
+                placeholder="Type recipe name..."
+                placeholderTextColor={"#C6C6C6"}
+              ></TextInput>
             </View>
             <View>
               <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
@@ -127,17 +248,17 @@ export default function App() {
                 style={[styles.dropdown]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
-                data={dataComplexity}
+                data={complexity}
                 maxHeight={500}
                 labelField="label"
                 valueField="value"
-                placeholder={!isFocus ? "Choose" : "..."}
-                value={value}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
+                placeholder={!isFocusComplexity ? "Choose" : "..."}
+                value={valueComplexity}
+                onFocus={() => setIsFocusComplexity(true)}
+                onBlur={() => setIsFocusComplexity(false)}
                 onChange={(item) => {
-                  setValue(item.value);
-                  setIsFocus(false);
+                  setValueComplexity(item.value);
+                  setIsFocusComplexity(false);
                 }}
               />
             </View>
@@ -146,17 +267,39 @@ export default function App() {
           <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
             Ingredients
           </Text>
-          <TextInput
-            style={styles.fieldName}
-            placeholder="Type ingredients name..."
-            placeholderTextColor={"#C6C6C6"}
-          ></TextInput>
-          <TextInput
-            style={styles.fieldName}
-            placeholder="Type ingredients name..."
-            placeholderTextColor={"#C6C6C6"}
-          ></TextInput>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          {ingredients.map((ingredient, index) => (
+            <View
+              key={index}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <TextInput
+                style={[styles.fieldName, { flex: 1, position: "relative" }]}
+                placeholder="Type ingredients name..."
+                placeholderTextColor={"#C6C6C6"}
+                value={ingredient}
+                onChangeText={(text) => {
+                  const newIngredients = [...ingredients];
+                  newIngredients[index] = text;
+                  setIngredients(newIngredients);
+                }}
+              />
+              {index > 0 && (
+                <TouchableOpacity onPress={() => removeIngredient(index)}>
+                  <Icon
+                    name="close-outline"
+                    size={25}
+                    color="#C6C6C6"
+                    style={{
+                      marginLeft: -30,
+                      marginTop: -5,
+                      position: "absolute",
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
+          <TouchableOpacity style={styles.button} onPress={addIngredient}>
             <Text style={styles.buttonText}> + Add Ingredients</Text>
           </TouchableOpacity>
 
@@ -164,21 +307,50 @@ export default function App() {
           <Text style={{ fontSize: 16, fontWeight: 600, marginTop: 10 }}>
             Recipe Steps
           </Text>
-          <TextInput
-            style={styles.fieldStep}
-            placeholder="Type Step ... of the description for this dish..."
-            placeholderTextColor={"#C6C6C6"}
-          ></TextInput>
-          <TextInput
-            style={styles.fieldStep}
-            placeholder="Type Step ... of the description for this dish..."
-            placeholderTextColor={"#C6C6C6"}
-          ></TextInput>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          {steps.map((step, index) => (
+            <View
+              key={index}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <TextInput
+                style={[styles.fieldStep, { flex: 1, position: "relative" }]}
+                placeholder={`Type Step ${
+                  index + 1
+                } of the description for this dish...`}
+                placeholderTextColor={"#C6C6C6"}
+                value={step}
+                onChangeText={(text) => {
+                  const newSteps = [...steps];
+                  newSteps[index] = text;
+                  setSteps(newSteps);
+                }}
+              />
+              {index > 0 && (
+                <TouchableOpacity onPress={() => removeStep(index)}>
+                  <Icon
+                    name="close-outline"
+                    size={30}
+                    color="#C6C6C6"
+                    style={{
+                      marginLeft: -40,
+                      marginTop: 40,
+                      position: "absolute",
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
+          <TouchableOpacity style={styles.button} onPress={addStep}>
             <Text style={styles.buttonText}> + Add Step</Text>
           </TouchableOpacity>
           {/* Button */}
-          <TouchableOpacity style={styles.buttonAdd} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.buttonAdd}
+            onPress={() => {
+              handleSubmit();
+            }}
+          >
             <Text style={{ color: "#fff" }}> Save</Text>
           </TouchableOpacity>
         </View>
@@ -251,6 +423,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 10,
     marginTop: 10,
+    paddingLeft: 20,
   },
   buttonAdd: {
     backgroundColor: "#000",
@@ -268,8 +441,17 @@ const styles = StyleSheet.create({
     width: 150,
     marginTop: 10,
   },
+  dropdown1: {
+    height: 50,
+    borderColor: "#C6C6C6",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
   placeholderStyle: {
     fontSize: 15,
+    color: "#C6C6C6",
   },
   selectedTextStyle: {
     fontSize: 15,

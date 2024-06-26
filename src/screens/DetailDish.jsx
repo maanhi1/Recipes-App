@@ -26,7 +26,7 @@ export default function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://192.168.1.7:3000/detail_dish") // Thay 192.168.1.11 bằng địa chỉ IP của máy
+      .get("http://192.168.1.87:3000/detail_dish") // Thay 192.168.1.11 bằng địa chỉ IP của máy
       .then((response) => {
         console.log(response.data);
         if (Array.isArray(response.data)) {
@@ -48,7 +48,7 @@ export default function App() {
   return (
     <View>
       <View style={styles.container}>
-        {data.map((ỉtems) => (
+        {data.map((items) => (
           <View>
             <View style={styles.icon}>
               <View style={styles.iconContainer}>

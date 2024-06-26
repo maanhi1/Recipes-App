@@ -16,6 +16,7 @@ export default function App() {
       <BottomNavigation />
       {/* <DetailDish></DetailDish> */}
       {/* <FilterScreent></FilterScreent> */}
+      {/* <Vidu /> */}
     </View>
   );
 }

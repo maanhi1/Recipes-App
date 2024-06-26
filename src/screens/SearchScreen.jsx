@@ -9,11 +9,76 @@ import {
   Dimensions,
   TextInput,
 } from "react-native";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
+import axios from "axios";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+//Screem
+import FilterScreen from "./FilterScreen";
+
+const Stack = createNativeStackNavigator();
 
 const { width, height } = Dimensions.get("window");
 
-export default function App() {
+const SearchScreen = ({ navigation }) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://192.168.1.7:3000/datadish")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          console.error("Dữ liệu trả về không phải là mảng");
+        }
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+
+  const [category, setcategory] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://192.168.1.7:3000/categories`)
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setcategory(response.data);
+        } else {
+          console.error("Dữ liệu trả về không phải là mảng");
+        }
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  }, []);
+
+  const [dishSearchScreen, setDishSearchScreen] = useState();
+  const getDetailDishSearchScreen = (dishId) => {
+    axios
+      .get(`http://192.168.1.7:3000/datadish/${dishId}`)
+      .then((response) => {
+        setDishSearchScreen(response.data);
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  };
+
+  const [dishInSearchScreenByCategoryId, setDishInSearchScreenByCategoryId] =
+    useState();
+  const getDishByCategoryId = (categoryId) => {
+    axios
+      .get(`http://192.168.1.7:3000/filterDishByCategoryId/${categoryId}`)
+      .then((response) => {
+        setDishInSearchScreenByCategoryId(response.data);
+      })
+      .catch((error) => {
+        console.error("Có lỗi xảy ra:", error);
+      });
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -23,19 +88,13 @@ export default function App() {
             style={styles.fieldSearch}
             placeholder="Search"
             placeholderTextColor={"#86869E"}
-          >
-            <Icon
-              style={{ position: "absolute" }}
-              name="search-outline"
-              color={"#86869E"}
-              size={18}
-            />
-          </TextInput>
+          />
           <Icon
             style={{ padding: 4, marginLeft: 5 }}
             name="options-outline"
             color={"#86869E"}
             size={30}
+            onPress={() => navigation.navigate("Options")}
           />
         </View>
         {/* Button */}
@@ -44,173 +103,95 @@ export default function App() {
             <TouchableOpacity style={styles.button} onPress={() => {}}>
               <Text style={styles.buttonText}>All</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Breakfast</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Lunch</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Dinner</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Dessert</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Drink</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
-              <Text style={styles.buttonText}>Snacks And Appetizer</Text>
-            </TouchableOpacity>
+            {category.map((items) => (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  getDishByCategoryId(items.categoryId);
+                }}
+                key={items.categoryId}
+              >
+                <Text style={styles.buttonText}>{items.categoryName}</Text>
+              </TouchableOpacity>
+            ))}
           </ScrollView>
         </View>
         {/* Dishes */}
         <View>
           <View style={styles.dishContainer}>
-            {/* More ... */}
-            <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 5, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-
-                <View style={styles.dishContainer3}>
+            {data.length > 0 ? (
+              data.map((items) => (
+                <TouchableOpacity
+                  key={items.dishId}
+                  style={styles.dishItem}
+                  activeOpacity={0.8}
+                  onPress={() => getDetailDishSearchScreen(items.dishId)}
+                >
                   <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
+                    style={styles.imgDish}
+                    source={{ uri: items.imagesDish }}
                   />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
-                    Thỏ con của mẹ
-                  </Text>
-                  <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
-                    name="bookmark-outline"
-                    color={"#000"}
-                    size={18}
-                  />
-                </View>
-              </View>
-            </View>
-            {/* vidu */}
-            <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 5, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
+                  <View style={styles.dishContainer2}>
+                    <Text
+                      style={{ marginTop: 8, marginLeft: 10 }}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
+                      {items.dishName}
+                    </Text>
 
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
-                    Thỏ con của mẹ
-                  </Text>
-                  <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
-                    name="bookmark-outline"
-                    color={"#000"}
-                    size={18}
-                  />
-                </View>
-              </View>
-            </View>
-            {/* vidu */}
-            <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 5, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
-                    Thỏ con của mẹ
-                  </Text>
-                  <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
-                    name="bookmark-outline"
-                    color={"#000"}
-                    size={18}
-                  />
-                </View>
-              </View>
-            </View>
-            {/* vidu */}
-            <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 5, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
-                    Thỏ con của mẹ
-                  </Text>
-                  <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
-                    name="bookmark-outline"
-                    color={"#000"}
-                    size={18}
-                  />
-                </View>
-              </View>
-            </View>
-            {/* vidu */}
-            <View style={styles.dishItem}>
-              <Image
-                style={styles.imgDish}
-                source={require("../../assets/image.jpg")}
-              />
-              <View style={styles.dishContainer2}>
-                <Text style={{ marginTop: 5, marginLeft: 10 }}>
-                  Lasagna Pasta
-                </Text>
-
-                <View style={styles.dishContainer3}>
-                  <Image
-                    style={styles.imgUser}
-                    source={require("../../assets/image.jpg")}
-                  />
-                  <Text style={{ fontSize: 13, marginTop: 5, marginLeft: 10 }}>
-                    Thỏ con của mẹ
-                  </Text>
-                  <Icon
-                    style={{ marginTop: 5, marginLeft: 10 }}
-                    name="bookmark-outline"
-                    color={"#000"}
-                    size={18}
-                  />
-                </View>
-              </View>
-            </View>
+                    <View style={styles.dishContainer3}>
+                      <Image
+                        style={styles.imgUser}
+                        source={{ uri: items.imageUser }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          marginTop: 5,
+                          marginLeft: 10,
+                          width: 90,
+                        }}
+                      >
+                        {items.userName}
+                      </Text>
+                      <Icon
+                        style={{ marginTop: 5, marginLeft: 10 }}
+                        name="bookmark-outline"
+                        color={"#000"}
+                        size={18}
+                        onPress={() => {}}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ))
+            ) : (
+              <Text>Không có dữ liệu</Text>
+            )}
           </View>
         </View>
       </View>
     </ScrollView>
+  );
+};
+
+export default function App() {
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Search"
+          component={SearchScreen}
+        />
+        <Stack.Screen
+          options={{ headerTitle: "" }}
+          name="Options"
+          component={FilterScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -229,7 +210,7 @@ const styles = StyleSheet.create({
   },
   dishContainer3: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 13,
   },
   dishContainer2: {
     backgroundColor: "#fff",
@@ -267,9 +248,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   imgDish: {
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     width: width / 2 - 20,
-    height: 150,
+    height: 140,
   },
   imgUser: {
     height: 25,
