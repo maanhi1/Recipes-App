@@ -60,12 +60,6 @@ export default function App() {
       return;
     }
 
-    // // Kiểm tra độ dài mật khẩu (tối thiểu 5 và tối đa 10 kí tự)
-    // if (password.length < 5 || password.length > 10) {
-    //   Alert.alert("Passwords must contain 5 - 10 characters");
-    //   return;
-    // }
-
     // Tạo đối tượng newUser từ các trường userName, email, password
     const newUser = {
       userName,

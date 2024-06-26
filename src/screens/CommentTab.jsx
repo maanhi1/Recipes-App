@@ -1,62 +1,72 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import axios from "axios";
 
 export default function App() {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.0.104:3000/reviews")
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching comments:", error);
+      });
+  }, []);
+
+  const renderStars = (rating) => {
+    const filledStars = Math.floor(rating);
+    const halfStar = rating - filledStars >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - filledStars - halfStar;
+
+    let stars = [];
+
+    for (let i = 0; i < filledStars; i++) {
+      stars.push(<Icon key={i} name="star" size={15} color="#ffd700" />);
+    }
+
+    if (halfStar === 1) {
+      stars.push(
+        <Icon key="half" name="star-half-full" size={15} color="#ffd700" />
+      );
+    }
+
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(
+        <Icon key={`empty-${i}`} name="star-o" size={15} color="#ffd700" />
+      );
+    }
+
+    return stars;
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        {/* count comment */}
-        <Text style={styles.countComment}>5 Comments</Text>
+        <Text style={styles.countComment}>{comments.length} Comments</Text>
 
-        {/* list comments */}
-        <View>
-          <View style={styles.commentsContainer}>
+        {comments.map((comment, index) => (
+          <View key={index} style={styles.commentsContainer}>
             <Image
               style={styles.imageUser}
-              source={require("../../assets/image.jpg")}
+              source={{ uri: comment.userImage }}
             />
             <View style={styles.comment}>
-              {/*name user*/}
-              <Text style={{ fontSize: 17, fontWeight: 700 }}>Mai Anh</Text>
-              {/*comment*/}
+              <Text style={{ fontSize: 17, fontWeight: "700" }}>
+                {comment.username}
+              </Text>
+              <View style={styles.starsContainer}>
+                {renderStars(comment.rating)}
+              </View>
               <Text style={{ lineHeight: 25, width: 280 }}>
-                Đã thử, ngon điên. Mọi người nên thửs
+                {comment.comment}
               </Text>
             </View>
           </View>
-
-          <View style={styles.commentsContainer}>
-            <Image
-              style={styles.imageUser}
-              source={require("../../assets/image.jpg")}
-            />
-            <View style={styles.comment}>
-              {/*name user*/}
-              <Text style={{ fontSize: 17, fontWeight: 700 }}>Mai Anh</Text>
-              {/*comment*/}
-              <Text style={{ lineHeight: 25, width: 280 }}>
-                Tui mới làm thử, ngon thiệttt. Công thức này đáng để thử haha.
-                Để bữa nào thử lại lần nữa =))
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.commentsContainer}>
-            <Image
-              style={styles.imageUser}
-              source={require("../../assets/image.jpg")}
-            />
-            <View style={styles.comment}>
-              {/*name user*/}
-              <Text style={{ fontSize: 17, fontWeight: 700 }}>Mai Anh</Text>
-              {/*comment*/}
-              <Text style={{ lineHeight: 25, width: 280 }}>
-                Công thức đỉnh luôn mọi người ơi. Tui cũng ở Việt Nam nè
-                hihihiiiiiiiiiiiiiii
-              </Text>
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
     </ScrollView>
   );
@@ -65,19 +75,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15,
+    marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
   },
   countComment: {
     fontSize: 17,
     fontWeight: "700",
-    justifyContent: "center",
-    alignItem: "center",
+    marginBottom: 10,
   },
   comment: {
-    marginVertical: 50,
-    flex: 1,
+    marginLeft: 10,
   },
   imageUser: {
     width: 40,
@@ -88,7 +96,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
   },
-  comment: {
-    marginLeft: 10,
+  starsContainer: {
+    flexDirection: "row",
+    marginTop: 5,
   },
 });
