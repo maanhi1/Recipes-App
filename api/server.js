@@ -99,20 +99,19 @@ app.post("/login", (req, res) => {
     });
   });
 });
-
-// Endpoint to get comments
+// Endpoint to get reviews with userName
 app.get("/reviews", (req, res) => {
-  db.query("SELECT * FROM reviews", (err, results) => {
+  const query = `
+    SELECT r.rating, r.comment, u.userName
+    FROM reviews r
+    INNER JOIN users u ON r.userId = u.userId
+  `;
+  db.query(query, (err, results) => {
     if (err) {
-      console.error("Error fetching comments:", err);
-      res.status(500).send("Error fetching comments.");
+      console.error("Error fetching reviews:", err);
+      res.status(500).send("Error fetching reviews.");
       return;
     }
     res.json(results);
   });
-});
-
-// Lắng nghe trên cổng 3000
-app.listen(3000, () => {
-  console.log("Máy chủ đang chạy trên cổng 3000");
 });

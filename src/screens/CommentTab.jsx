@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 
 export default function App() {
-  const [comments, setComments] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://192.168.0.104:3000/reviews")
       .then((response) => {
-        setComments(response.data);
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+        } else {
+          console.error("Dữ liệu trả về không phải là mảng");
+        }
       })
       .catch((error) => {
-        console.error("Error fetching comments:", error);
+        console.error("Có lỗi xảy ra:", error);
       });
   }, []);
 
@@ -46,23 +50,25 @@ export default function App() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.countComment}>{comments.length} Comments</Text>
+        <Text style={styles.countComment}>{data.length} Bình luận</Text>
 
-        {comments.map((comment, index) => (
+        {data.map((review, index) => (
           <View key={index} style={styles.commentsContainer}>
+            {/* Hiển thị hình ảnh người dùng */}
             <Image
               style={styles.imageUser}
-              source={{ uri: comment.userImage }}
+              source={require("../../assets/image.jpg")} // Đảm bảo review.userImage được cung cấp đúng
             />
             <View style={styles.comment}>
               <Text style={{ fontSize: 17, fontWeight: "700" }}>
-                {comment.username}
+                {review.userName}
               </Text>
               <View style={styles.starsContainer}>
-                {renderStars(comment.rating)}
+                {renderStars(review.rating)}{" "}
+                {/* Hiển thị các biểu tượng sao dựa trên đánh giá */}
               </View>
               <Text style={{ lineHeight: 25, width: 280 }}>
-                {comment.comment}
+                {review.comment} {/* Hiển thị bình luận */}
               </Text>
             </View>
           </View>
