@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Dongle-Bold.ttf",
+      "sha1": "75fcc4437ae92bd5b3f0c064fc9891a3bc2aba67"
+    },
+    {
+      "path": "assets/fonts/Dongle-Light.ttf",
+      "sha1": "6e627ff8bf24d576b66548bc2652aee816d99ac4"
+    },
+    {
+      "path": "assets/fonts/Dongle-Regular.ttf",
+      "sha1": "740c531d37fda2172f86e397855eb18a6b1b5825"
+    }
+  ]
+}

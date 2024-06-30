@@ -10,7 +10,6 @@ import SearchScreen from "../screens/SearchScreen";
 import AddRecipeScreen from "../screens/AddRecipeScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +18,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: {
             height: 55,

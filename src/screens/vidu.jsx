@@ -6,7 +6,11 @@ export default function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
+<<<<<<< HEAD
       .get("http://192.168.0.104:3000/datadish") // Thay 192.168.1.11 bằng địa chỉ IP của máy
+=======
+      .get("http://192.168.1.10:3000/datadish")
+>>>>>>> 72f40e787a5cf8ae5a2fa410753221c8c8e58158
       .then((response) => {
         console.log(response.data);
         if (Array.isArray(response.data)) {
