@@ -6,7 +6,7 @@ export default function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://192.168.1.10:3000/datadish")
+      .get("http://192.168.1.23:3000/datadish")
       .then((response) => {
         console.log(response.data);
         if (Array.isArray(response.data)) {

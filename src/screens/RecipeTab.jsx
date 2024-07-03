@@ -1,56 +1,62 @@
-import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Icon from "react-native-vector-icons/Ionicons";
+import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 
-//Eg:
-const steps = [
-  {
-    id: "1",
-    title: "Step 1",
-    instructions: [
-      "Bring a large pot of water to a boil, add a pinch of salt.",
-      "Add pasta to boiling water and cook until al dente (according to package instructions).",
-      "Once cooked, drain the pasta in a colander and rinse with cold water to stop the cooking process.",
-    ],
-  },
-  {
-    id: "2",
-    title: "Step 2",
-    instructions: ["In a large skillet, heat olive oil over medium heat."],
-  },
-];
+const { width, height } = Dimensions.get("window");
 
-export default function App() {
+const RecipeTab = ({ dishId }) => {
+  const [steps, setSteps] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.1.23:3000/steps/${dishId}`)
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          const sortedSteps = response.data.sort(
+            (a, b) => a.stepNumber - b.stepNumber
+          );
+          setSteps(sortedSteps);
+        } else {
+          console.error("Dữ liệu trả về không phải là mảng");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching steps:", error);
+      });
+  }, [dishId]);
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={steps}
-        renderItem={({ item }) => (
-          <View style={styles.step}>
+    <ScrollView>
+      <View style={styles.container}>
+        {steps.map((step, index) => (
+          <View key={step.recipeStepsId} style={styles.step}>
             <View style={styles.iconStep}>
               <Icon name="checkmark-circle" color={"#000"} size={25} />
             </View>
             <View style={styles.stepContent}>
-              <Text style={styles.stepTitle}>{item.title}</Text>
-              {item.instructions.map((instruction, index) => (
-                <Text key={index} style={styles.instruction}>
-                  {`\u2022 ${instruction}`}
-                </Text>
+              <Text style={styles.stepTitle}> Step {step.stepNumber}</Text>
+              {step.description.split(". ").map((sentence, index) => (
+                <View key={index} style={styles.instructionContainer}>
+                  <Text style={styles.bullet}>•</Text>
+                  <Text style={styles.instruction}>{sentence.trim()}</Text>
+                </View>
               ))}
             </View>
           </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
-}
+};
+
+export default RecipeTab;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
+    marginBottom: (height + 50) / 3,
   },
   step: {
     flexDirection: "row",
@@ -63,12 +69,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 10,
   },
-  checkMark: {
-    color: "#fff",
-    fontSize: 18,
+  instructionContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginBottom: -5,
+  },
+  bullet: {
+    fontSize: 20,
+    marginRight: 10,
   },
   stepContent: {
-    flex: 1,
+    width: width - 100,
   },
   stepTitle: {
     fontSize: 18,
@@ -76,8 +87,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   instruction: {
-    fontSize: 16,
+    fontSize: 15,
     marginBottom: 10,
-    lineHeight: 30,
+    lineHeight: 28,
   },
 });

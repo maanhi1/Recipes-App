@@ -11,7 +11,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 const { width, height } = Dimensions.get("window");
 
-export default function App() {
+const ProfileScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -19,6 +19,7 @@ export default function App() {
           name="settings-outline"
           size={25}
           style={{ marginLeft: 20, marginTop: 50 }}
+          onPress={() => navigation.navigate("Setting")}
         ></Icon>
         <View
           style={{
@@ -43,181 +44,6 @@ export default function App() {
           {/* Dishes */}
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.dishContainer}>
-              <TouchableOpacity style={styles.dishItems} activeOpacity={0.8}>
-                <Image
-                  style={styles.imageDish}
-                  source={require("../../assets/image.jpg")}
-                ></Image>
-                <View style={styles.containeeIcon}>
-                  <View style={styles.rating}>
-                    <Icon name="star" size={20} color={"#EBBD1A"}></Icon>
-                    <Text style={{ marginLeft: 8 }}>5.0</Text>
-                  </View>
-                  <TouchableOpacity style={styles.bookmark}>
-                    <Icon name="bookmark-outline" size={15}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.containeeDes}>
-                  <Text style={{ fontSize: 20, marginLeft: 20, marginTop: 5 }}>
-                    Beef Steak
-                  </Text>
-                  <View style={styles.description}>
-                    <Image
-                      style={{ width: 20, height: 20, borderRadius: 50 }}
-                      source={require("../../assets/image.jpg")}
-                    ></Image>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Tho con cua me
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Image
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginLeft: 8,
-                        marginTop: 3,
-                      }}
-                      source={require("../../assets/detaikDish/time.jpg")}
-                    ></Image>
-
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      25 mins
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Moderate
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.dishItems} activeOpacity={0.8}>
-                <Image
-                  style={styles.imageDish}
-                  source={require("../../assets/image.jpg")}
-                ></Image>
-                <View style={styles.containeeIcon}>
-                  <View style={styles.rating}>
-                    <Icon name="star" size={20} color={"#EBBD1A"}></Icon>
-                    <Text style={{ marginLeft: 8 }}>5.0</Text>
-                  </View>
-                  <TouchableOpacity style={styles.bookmark}>
-                    <Icon name="bookmark-outline" size={15}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.containeeDes}>
-                  <Text style={{ fontSize: 20, marginLeft: 20, marginTop: 5 }}>
-                    Beef Steak
-                  </Text>
-                  <View style={styles.description}>
-                    <Image
-                      style={{ width: 20, height: 20, borderRadius: 50 }}
-                      source={require("../../assets/image.jpg")}
-                    ></Image>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Tho con cua me
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Image
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginLeft: 8,
-                        marginTop: 3,
-                      }}
-                      source={require("../../assets/detaikDish/time.jpg")}
-                    ></Image>
-
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      25 mins
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Moderate
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
               <TouchableOpacity style={styles.dishItems} activeOpacity={0.8}>
                 <Image
                   style={styles.imageDish}
@@ -403,181 +229,6 @@ export default function App() {
                   </View>
                 </View>
               </TouchableOpacity>
-
-              <TouchableOpacity style={styles.dishItems} activeOpacity={0.8}>
-                <Image
-                  style={styles.imageDish}
-                  source={require("../../assets/image.jpg")}
-                ></Image>
-                <View style={styles.containeeIcon}>
-                  <View style={styles.rating}>
-                    <Icon name="star" size={20} color={"#EBBD1A"}></Icon>
-                    <Text style={{ marginLeft: 8 }}>5.0</Text>
-                  </View>
-                  <TouchableOpacity style={styles.bookmark}>
-                    <Icon name="bookmark-outline" size={15}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.containeeDes}>
-                  <Text style={{ fontSize: 20, marginLeft: 20, marginTop: 5 }}>
-                    Beef Steak
-                  </Text>
-                  <View style={styles.description}>
-                    <Image
-                      style={{ width: 20, height: 20, borderRadius: 50 }}
-                      source={require("../../assets/image.jpg")}
-                    ></Image>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Tho con cua me
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Image
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginLeft: 8,
-                        marginTop: 3,
-                      }}
-                      source={require("../../assets/detaikDish/time.jpg")}
-                    ></Image>
-
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      25 mins
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Moderate
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.dishItems} activeOpacity={0.8}>
-                <Image
-                  style={styles.imageDish}
-                  source={require("../../assets/image.jpg")}
-                ></Image>
-                <View style={styles.containeeIcon}>
-                  <View style={styles.rating}>
-                    <Icon name="star" size={20} color={"#EBBD1A"}></Icon>
-                    <Text style={{ marginLeft: 8 }}>5.0</Text>
-                  </View>
-                  <TouchableOpacity style={styles.bookmark}>
-                    <Icon name="bookmark-outline" size={15}></Icon>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.containeeDes}>
-                  <Text style={{ fontSize: 20, marginLeft: 20, marginTop: 5 }}>
-                    Beef Steak
-                  </Text>
-                  <View style={styles.description}>
-                    <Image
-                      style={{ width: 20, height: 20, borderRadius: 50 }}
-                      source={require("../../assets/image.jpg")}
-                    ></Image>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Tho con cua me
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Image
-                      style={{
-                        width: 15,
-                        height: 15,
-                        borderRadius: 50,
-                        marginLeft: 8,
-                        marginTop: 3,
-                      }}
-                      source={require("../../assets/detaikDish/time.jpg")}
-                    ></Image>
-
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      25 mins
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      |
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        marginLeft: 8,
-                        marginTop: 3,
-                        color: "#686868",
-                      }}
-                    >
-                      Moderate
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>
@@ -589,7 +240,9 @@ export default function App() {
       </View>
     </ScrollView>
   );
-}
+};
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

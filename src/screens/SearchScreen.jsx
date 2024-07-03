@@ -25,7 +25,7 @@ const SearchScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://192.168.1.7:3000/datadish")
+      .get("http://192.168.1.23:3000/datadish")
       .then((response) => {
         if (Array.isArray(response.data)) {
           setData(response.data);
@@ -41,7 +41,7 @@ const SearchScreen = ({ navigation }) => {
   const [category, setcategory] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.7:3000/categories`)
+      .get(`http://192.168.1.23:3000/categories`)
       .then((response) => {
         if (Array.isArray(response.data)) {
           setcategory(response.data);
@@ -57,7 +57,7 @@ const SearchScreen = ({ navigation }) => {
   const [dishSearchScreen, setDishSearchScreen] = useState();
   const getDetailDishSearchScreen = (dishId) => {
     axios
-      .get(`http://192.168.1.7:3000/datadish/${dishId}`)
+      .get(`http://192.168.1.23:3000/datadish/${dishId}`)
       .then((response) => {
         setDishSearchScreen(response.data);
       })
@@ -70,7 +70,7 @@ const SearchScreen = ({ navigation }) => {
     useState();
   const getDishByCategoryId = (categoryId) => {
     axios
-      .get(`http://192.168.1.7:3000/filterDishByCategoryId/${categoryId}`)
+      .get(`http://192.168.1.23:3000/filterDishByCategoryId/${categoryId}`)
       .then((response) => {
         setDishInSearchScreenByCategoryId(response.data);
       })
@@ -94,7 +94,7 @@ const SearchScreen = ({ navigation }) => {
             name="options-outline"
             color={"#86869E"}
             size={30}
-            onPress={() => navigation.navigate("Options")}
+            onPress={() => navigation.navigate("Filter")}
           />
         </View>
         {/* Button */}
@@ -125,12 +125,22 @@ const SearchScreen = ({ navigation }) => {
                   key={items.dishId}
                   style={styles.dishItem}
                   activeOpacity={0.8}
-                  onPress={() => getDetailDishSearchScreen(items.dishId)}
+                  onPress={() =>
+                    navigation.navigate("Detail", { dishId: items.dishId })
+                  }
                 >
-                  <Image
-                    style={styles.imgDish}
-                    source={{ uri: items.imagesDish }}
-                  />
+                  <View>
+                    <Image
+                      style={styles.imgDish}
+                      source={{ uri: items.imagesDish }}
+                    />
+                    <View style={styles.rating}>
+                      <Icon name="star" size={18} color={"#EBBD1A"}></Icon>
+                      <Text style={{ marginLeft: 5, fontWeight: 600 }}>
+                        5.0
+                      </Text>
+                    </View>
+                  </View>
                   <View style={styles.dishContainer2}>
                     <Text
                       style={{ marginTop: 8, marginLeft: 10 }}
@@ -176,24 +186,7 @@ const SearchScreen = ({ navigation }) => {
   );
 };
 
-export default function App() {
-  return (
-    <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Search"
-          component={SearchScreen}
-        />
-        <Stack.Screen
-          options={{ headerTitle: "" }}
-          name="Options"
-          component={FilterScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+export default SearchScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -271,5 +264,19 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     width: width - 70,
     marginLeft: 10,
+  },
+  rating: {
+    flexDirection: "row",
+    backgroundColor: "#F8F3F3CC",
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    height: 23,
+    opacity: 0.8,
+    zIndex: 2,
+    position: "absolute",
+    marginLeft: 10,
+    marginTop: 10,
   },
 });

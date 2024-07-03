@@ -18,7 +18,7 @@ export default function App() {
   const [category, setcategory] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.7:3000/categories`)
+      .get(`http://192.168.1.23:3000/categories`)
       .then((response) => {
         if (Array.isArray(response.data)) {
           setcategory(response.data);
@@ -34,7 +34,7 @@ export default function App() {
   const [complexity, setComplexity] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.7:3000/difficultylevel`)
+      .get(`http://192.168.1.23:3000/difficultylevel`)
       .then((response) => {
         if (Array.isArray(response.data)) {
           setComplexity(response.data);

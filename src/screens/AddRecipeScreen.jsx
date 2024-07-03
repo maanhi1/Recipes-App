@@ -21,7 +21,7 @@ export default function App() {
   const [category, setCategory] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.7:3000/categories`)
+      .get(`http://192.168.1.23:3000/categories`)
       .then((response) => {
         const formattedData = response.data.map((item) => ({
           label: item.categoryName,
@@ -41,7 +41,7 @@ export default function App() {
   const [complexity, setComplexity] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.7:3000/difficultylevel`)
+      .get(`http://192.168.1.23:3000/difficultylevel`)
       .then((response) => {
         const formattedData = response.data.map((item) => ({
           label: item.difficultyLevelName,
@@ -115,7 +115,12 @@ export default function App() {
             style={styles.imageDish}
             source={require("../../assets/wait.jpg")}
           />
-          <View style={styles.textDish}>
+          <TouchableOpacity
+            style={styles.textDish}
+            onPress={() => {
+              console.log("Add Image");
+            }}
+          >
             <Icon name="image" size={25} />
             <Text
               style={{
@@ -127,7 +132,7 @@ export default function App() {
             >
               Add representative photo
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         {/* field text */}
         <View style={styles.fieldContainer}>

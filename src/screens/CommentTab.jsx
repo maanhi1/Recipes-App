@@ -1,66 +1,67 @@
-import * as React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Image,
+} from "react-native";
 
-export default function App() {
+const CommentTab = ({ dishId }) => {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.1.23:3000/reviews/${dishId}`)
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setReviews(response.data);
+        } else {
+          console.error("Dữ liệu trả về không phải là mảng");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
+      });
+  }, [dishId]);
+
   return (
     <ScrollView>
       <View style={styles.container}>
         {/* count comment */}
-        <Text style={styles.countComment}>5 Comments</Text>
+        <Text style={styles.countComment}>{reviews.length} Comments</Text>
 
         {/* list comments */}
-        <View>
-          <View style={styles.commentsContainer}>
+        {reviews.map((items, index) => (
+          <View key={index} style={styles.commentsContainer}>
             <Image
               style={styles.imageUser}
-              source={require("../../assets/image.jpg")}
+              source={
+                items.imageUser
+                  ? { uri: items.imageUser }
+                  : require("../../assets/user.jpg")
+              }
             />
             <View style={styles.comment}>
               {/*name user*/}
-              <Text style={{ fontSize: 17, fontWeight: 700 }}>Mai Anh</Text>
+              <Text style={{ fontSize: 17, fontWeight: 700 }}>
+                {items.userName}
+              </Text>
               {/*comment*/}
               <Text style={{ lineHeight: 25, width: 280 }}>
-                Đã thử, ngon điên. Mọi người nên thửs
+                {items.comment}
               </Text>
             </View>
           </View>
-
-          <View style={styles.commentsContainer}>
-            <Image
-              style={styles.imageUser}
-              source={require("../../assets/image.jpg")}
-            />
-            <View style={styles.comment}>
-              {/*name user*/}
-              <Text style={{ fontSize: 17, fontWeight: 700 }}>Mai Anh</Text>
-              {/*comment*/}
-              <Text style={{ lineHeight: 25, width: 280 }}>
-                Tui mới làm thử, ngon thiệttt. Công thức này đáng để thử haha.
-                Để bữa nào thử lại lần nữa =))
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.commentsContainer}>
-            <Image
-              style={styles.imageUser}
-              source={require("../../assets/image.jpg")}
-            />
-            <View style={styles.comment}>
-              {/*name user*/}
-              <Text style={{ fontSize: 17, fontWeight: 700 }}>Mai Anh</Text>
-              {/*comment*/}
-              <Text style={{ lineHeight: 25, width: 280 }}>
-                Công thức đỉnh luôn mọi người ơi. Tui cũng ở Việt Nam nè
-                hihihiiiiiiiiiiiiiii
-              </Text>
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
     </ScrollView>
   );
-}
+};
+
+export default CommentTab;
 
 const styles = StyleSheet.create({
   container: {

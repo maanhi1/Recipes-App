@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://192.168.1.7:3000/datadish")
+      .get("http://192.168.1.23:3000/datadish")
       .then((response) => {
         if (Array.isArray(response.data)) {
           setData(response.data);
@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
   const [category, setcategory] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.7:3000/categories`)
+      .get(`http://192.168.1.23:3000/categories`)
       .then((response) => {
         if (Array.isArray(response.data)) {
           setcategory(response.data);
@@ -54,17 +54,6 @@ const HomeScreen = ({ navigation }) => {
       });
   }, []);
 
-  const [dishInHomeScreen, setDishInHomeScreen] = useState();
-  const getDetailDishInHomeScreen = (dishId) => {
-    axios
-      .get(`http://192.168.1.7:3000/datadish/${dishId}`)
-      .then((response) => {
-        setDishInHomeScreen(response.data);
-      })
-      .catch((error) => {
-        console.error("Có lỗi xảy ra:", error);
-      });
-  };
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -143,9 +132,9 @@ const HomeScreen = ({ navigation }) => {
                   key={items.dishId}
                   style={styles.dishItem}
                   activeOpacity={0.8}
-                  // onPress={}
-                  onPress={() => getDetailDishInHomeScreen(items.dishId)}
-                  // onPress={() => navigation.navigate("Detail")}
+                  onPress={() =>
+                    navigation.navigate("Detail", { dishId: items.dishId })
+                  }
                 >
                   <View style={styles.dishItemContainer}>
                     <Image
@@ -209,24 +198,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default function App() {
-  return (
-    <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          options={{ headerTitle: "" }}
-          name="Detail"
-          component={DetailDish}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
